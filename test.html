@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>тестер механизма fingerprint</title>
+</head>
+<body>
+    <table id="results" border="1"></table>
+
+    <script>
+    S8M = {
+        timestamp: function() {
+            return Math["floor"](Date["now"]() / 1000)
+        },
+        mime: function() {
+            N2R = "";
+            if ("mimeTypes" in navigator) {
+                for (var i = 0; i < navigator["mimeTypes"]["length"]; i++) {
+                    N2R += navigator["mimeTypes"][i]["type"];
+                }
+            }
+            return N2R
+        },
+        detectHeadlessCallback: function(s5R) {
+            // s5R('detectHeadlessCallback', "0");
+            L5R = document["body"], 
+            (K5R = new Image)["src"] = "data:,", 
+            K5R["setAttribute"]("id", "__f_img"), 
+            L5R["appendChild"](K5R), 
+            K5R["onerror"] = function() {
+                if (K5R["width"] === 0 && K5R["height"] === 0) {
+                    s5R('detectHeadlessCallback', "1");
+                }
+                L5R["removeChild"](K5R)
+            }
+        },
+        plugins: function() {
+            var l5R;
+            if (window["ActiveXObject"])  {
+                m7R = [
+                    "AcroPDF.PDF", 
+                    "Adodb.Stream", 
+                    "AgControl.AgControl", 
+                    "DevalVRXCtrl.DevalVRXCtrl.1", 
+                    "MacromediaFlashPaper.MacromediaFlashPaper", 
+                    "Msxml2.DOMDocument", 
+                    "Msxml2.XMLHTTP", 
+                    "PDF.PdfCtrl", 
+                    "QuickTime.QuickTime", 
+                    "QuickTimeCheckObject.QuickTimeCheck.1", 
+                    "RealPlayer", 
+                    "RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)", 
+                    "RealVideo.RealVideo(tm) ActiveX Control (32-bit)", 
+                    "Scripting.Dictionary", 
+                    "SWCtl.SWCtl", 
+                    "Shell.UIHelper", 
+                    "ShockwaveFlash.ShockwaveFlash", 
+                    "Skype.Detection", 
+                    "TDCCtl.TDCCtl", 
+                    "WMPlayer.OCX", 
+                    "rmocx.RealPlayer G2 Control", 
+                    "rmocx.RealPlayer G2 Control.1"];
+                E1R = [];
+                for (var i = 0; i < m7R["length"]; i++) {
+                    c7R = m7R[i];
+                    try {
+                        new ActiveXObject(c7R), E1R["push"](c7R)
+                    } catch (G4R) {}
+                }
+                T7R = E1R["join"](";");
+                return [E1R["length"], T7R]
+            } else {
+                r1R = navigator["plugins"];
+                u1R = new Array(r1R["length"]);
+                for (var i = 0; i < r1R["length"]; i++) {
+                    a1R = r1R[i];
+                    W1R = new Array(a1R["length"]);
+                    for (var j = 0; j < a1R["length"]; j++) {
+                        W1R[j] = a1R[j]["type"];
+                    }
+                    u1R[i] = [a1R["name"], a1R["filename"], a1R["version"], W1R]
+                }
+                o1R = u1R["join"](";");
+                return [u1R["length"], o1R]
+            }
+        },
+        objectsEnumerate: function() {
+            function h4R(N4R) {
+                K4R = "";
+                for (var U4R in N4R) {
+                    if (U4R !== "serviceWorker") {
+                        K4R += U4R;
+                    }
+                }
+                return K4R
+            }
+            return [h4R(navigator), h4R(screen)]
+        },
+        fonts: function() {
+            function R4M() {
+                // определяет наличие шрифта в системе
+                // создаёт спан, записывает эталонные значения offsetWidth и offsetHeight
+                // потом присваивает шрифт и сравнивает с эталонными
+                Y9M = document["body"];
+                N9M = document["createElement"]("span");
+                C9M = ["monospace", "sans-serif", "serif"];
+                S3M = {};
+                u3M = {};
+                N9M["innerHTML"] = "mmmmmmmmmmlli";
+                N9M["style"]["fontSize"] = "72px";
+                for (var i = 0; i < C9M["length"]; i++) 
+                    N9M["style"]["fontFamily"] = C9M[i], 
+                    Y9M["appendChild"](N9M), 
+                    S3M[C9M[i]] = N9M["offsetWidth"], 
+                    u3M[C9M[i]] = N9M["offsetHeight"], 
+                    Y9M["removeChild"](N9M);
+                this["detect"] = function(h0M) {
+                    l3M = false;
+                    for (var i = 0; i < C9M["length"]; i++) {
+                        N9M["style"]["fontFamily"] = h0M + "," + C9M[i];
+                        Y9M["appendChild"](N9M);
+                        a0M = N9M["offsetWidth"] !== S3M[C9M[i]] || N9M["offsetHeight"] !== u3M[C9M[i]];
+                        Y9M["removeChild"](N9M);
+                        l3M = false || a0M;
+                    }
+                    return l3M
+                }
+            };
+            B0R = new R4M;
+            d9R = [
+                "cursive", 
+                "monospace", 
+                "serif", 
+                "sans-serif", 
+                "fantasy", 
+                "default", 
+                "Academy", 
+                "Arial", 
+                "Arial Black", 
+                "Arial Narrow", 
+                "Arial Rounded MT Bold", 
+                "Bebas Neue", 
+                "Bookman Old Style", 
+                "Bradley Hand ITC", 
+                "Calibri", 
+                "Century", 
+                "Century Gothic", 
+                "Comic Sans MS", 
+                "Courier", 
+                "Courier New", 
+                "Droid Sans", 
+                "Garamond", 
+                "Georgia", 
+                "Gentium", 
+                "Helvetica", 
+                "Impact", 
+                "Inconsolata", 
+                "King", 
+                "Lobster", 
+                "Lora", 
+                "Lucida Console", 
+                "Lalit", 
+                "Lucida", 
+                "Modena", 
+                "Monotype Corsiva", 
+                "Myriad", 
+                "Noto", 
+                "Open Sans", 
+                "Papyrus", 
+                "PT Sans", 
+                "Roboto", 
+                "Source Sans Pro", 
+                "Tahoma", 
+                "Times", 
+                "Times New Roman", 
+                "Trebuchet MS", 
+                "Ubuntu", 
+                "Verdana", 
+                "Verona"
+            ];
+            E9R = new Array(d9R["length"]);
+            for (var i = 0; i < d9R["length"]; i++) {
+                E9R[i] = +B0R["detect"](d9R[i]);
+            }
+            return E9R
+        },
+        offlineAudioCallback: function(g6R) {
+            // g6R('offlineAudioCallback', "0")
+            try {
+                ctx = window["OfflineAudioContext"] || window["webkitOfflineAudioContext"];
+                if (!ctx) {
+                    g6R('offlineAudioCallback', "1");
+                }
+                w0R = new ctx(1, 44100, 44100)
+                if (!w0R) {
+                    g6R('offlineAudioCallback', "2");
+                }
+                Z0R = w0R["createOscillator"]();
+                j0R = w0R["createDynamicsCompressor"]();
+                Z0R["type"] = "triangle";
+                Z0R["frequency"]["value"] = 10000;
+                if (j0R["threshold"]) {
+                    j0R["threshold"]["value"] = -50
+                }
+                if (j0R["knee"]) {
+                    j0R["knee"]["value"] = 40
+                }
+                if (j0R["ratio"]) {
+                    j0R["ratio"]["value"] = 12
+                }
+                if (j0R["reduction"]) {
+                    j0R["reduction"]["value"] = -20
+                }
+                if (j0R["attack"]) {
+                    j0R["attack"]["value"] = 0
+                }
+                if (j0R["release"]) {
+                    j0R["release"]["value"] = .25
+                }
+                Z0R["connect"](j0R);
+                j0R["connect"](w0R["destination"]);
+                Z0R["start"](0);
+                w0R["startRendering"]();
+                w0R["oncomplete"] = function(p8E) {
+                    S8E = ""
+                    for (i = 0; i < p8E["renderedBuffer"]["length"];) {
+                        S8E += p8E["renderedBuffer"]["getChannelData"](0)[i]["toString"]();
+                        if (i < p8E["renderedBuffer"]["length"] - 1000) {
+                            i += 100;
+                        } else {
+                            i += 1;
+                        }
+                    }
+                    g6R('offlineAudioCallback', S8E);
+                }
+            } catch (f8E) {
+                g6R('offlineAudioCallback', "3"+f8E);
+            }
+        },
+        screen: function() {
+            j8E = window["screen"];
+            Z8E = j8E["width"];
+            w8E = j8E["height"];
+            l8E = j8E["colorDepth"];
+            V8E = j8E["pixelDepth"] || 0;
+            if (!("WebkitAppearance" in document["documentElement"]["style"])) {
+                v8E = window["devicePixelRatio"] || j8E["deviceXDPI"] / j8E["logicalXDPI"] || 1;
+                Z8E = Math["round"](v8E * Z8E);
+                w8E = Math["round"](v8E * w8E);
+            }
+            return Z8E < w8E ? [w8E, Z8E, l8E, V8E] : [Z8E, w8E, l8E, V8E]
+        },
+        language: function() {
+            R2E = navigator["language"] || navigator["userLanguage"] || navigator["browserLanguage"] || navigator["systemLanguage"] || "";
+            return R2E
+        },
+        gpu: function() {
+            g5E = document["createElement"]("canvas");
+            a5E = ""; 
+            e2E = ""; 
+            H5E = "0";
+            try {
+                k2E = g5E["getContext"]("experimental-webgl");
+                k2E["viewportWidth"] = g5E["width"];
+                k2E["viewportHeight"] = g5E["height"];
+                if (k2E) {
+                    O2E = k2E["getExtension"]("WEBGL_debug_renderer_info");
+                    e2E = typeof(O2E);
+                    if (e2E !== "undefined") {
+                        a5E = k2E["getParameter"](O2E["UNMASKED_RENDERER_WEBGL"]), k2E["getParameter"](O2E["UNMASKED_VENDOR_WEBGL"]);
+                    }else{ 
+                        a5E = k2E["getParameter"](k2E["RENDERER"]), k2E["getParameter"](k2E["VENDOR"]);
+                    }
+                }
+                H5E = k2E["getParameter"](k2E["VERSION"])
+            } catch (a1E) {}
+            return [e2E, a5E, H5E]
+        },
+        platform: function() {
+            return navigator["platform"] || ""
+        },
+        canvas: function() {
+            S1E = document["createElement"]("canvas");
+            if (S1E["getContext"] && S1E["getContext"]("2d")) {
+                N1E = "https://Avito.Ru, <canvas> 1.0";
+                p1E = S1E["getContext"]("2d");
+                p1E["textBaseline"] = "top";
+                p1E["font"] = "14px \"Arial\"";
+                p1E["textBaseline"] = "alphabetic";
+                p1E["fillStyle"] = "#f60";
+                p1E["fillRect"](125, 1, 62, 20);
+                p1E["fillStyle"] = "#069";
+                p1E["fillText"](N1E, 2, 15);
+                p1E["fillStyle"] = "rgba(102, 204, 0, 0.7)";
+                p1E["fillText"](N1E, 4, 17);
+                return S1E["toDataURL"]();
+            } else {
+                return "";
+            } 
+        },
+        es6features: function() {
+            g4E = [
+                "return [\"a\", ...\"bcd\", \"e\"][3] === \"d\" ? 1 : 0;",
+                "try { Math.max(...2); return 2; } catch(_) { return Math.max(...[1, 2, 3]) === 3 ? 1 : 0; }",
+                "var x = \"y\"; return ({ [x]: 1 }).y === 1 ? 1 : 0;", 
+                "var a = 7, b = 8, c = {a,b}; return c.a === 7 && c.b === 8 ? 1 : 0;",
+                "var result = \"\"; var iterable = (function*(){ yield 1; yield 2; yield 3; }());" + 
+                    "for (var item of iterable) { result += item; } return result === \"123\" ? 1 : 0;",
+                "var arr = [,,], count = 0; for (var item of arr) count += (item === undefined);return count === 2 ? 1 : 0;",
+                "typeof Uint32Array.prototype.keys === \"function\" &&" + 
+                    "typeof Int32Array.prototype.keys === \"function\" &&" + 
+                    "typeof Float32Array.prototype.keys === \"function\" &&" + 
+                    "typeof Float64Array.prototype.keys === \"function\" ? 1 : 0;" +
+                    "typeof Uint8Array.prototype.keys === \"function\" &&" +
+                    "return typeof Int8Array.prototype.keys === \"function\" &&" +
+                    "typeof Uint16Array.prototype.keys === \"function\" &&" +
+                    "typeof Uint8ClampedArray.prototype.keys === \"function\" &&" +
+                    "typeof Int16Array.prototype.keys === \"function\" &&",
+                "var map = new Map(); map.set(-0, \"foo\"); var k; map.forEach(function (value, key) { k = 1 / key; });" + 
+                    "return k === Infinity && map.get(+0) == \"foo\" ? 1 : 0;",
+                "new Promise(function() {}); try {Promise(function() {}); return 0; } catch(_) { return 1; }",
+                "if (!({ __proto__ : [] } instanceof Array)) { return 0;} var a = \"__proto__\";"  + "return !({ [a] : [] } instanceof Array) ? 1 : 0;",
+                "var closed = false; var iter = global.__createIterableObject([1, 2, 3], {" +
+                    "\"return\": function() { closed = true; return {}; } });"  +
+                    "try { new WeakMap(iter); } catch(_) {} return closed ? 1 : 0;",
+                "return \"species\" in Symbol ? 1 : 0;",
+                "return (function() { return typeof arguments[Symbol.iterator] === \"function\"" +
+                    "&& Object.hasOwnProperty.call(arguments, Symbol.iterator); }()) ? 1 : 0;",
+                "var obj1 = {}, obj2 = {}; var weakset = new WeakSet([obj1, obj2]);" + 
+                    "return weakset.has(obj1) && weakset.has(obj2) ? 1 : 0;"
+            ];
+            i7E = [];
+            for (var i = 0; i < g4E["length"]; i++) try {
+                i7E["push"](new Function(g4E[i])())
+            } catch (b9E) {
+                i7E["push"](2)
+            }
+            return i7E
+        },
+        html5video: function() {
+            a3E = [
+                "video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"", 
+                "video/ogg; codecs=\"theora, vorbis\"", 
+                "video/webm; codecs=\"vp8, vorbis\""
+            ]
+            e9E = document["createElement"]("video")
+            if (e9E && e9E["canPlayType"]) {
+                A9E = [];
+                for (var i = 0; i < a3E["length"]; i++) {
+                    switch (e9E["canPlayType"](a3E[i])) {
+                        case "probably":
+                            A9E[i] = 2;
+                            break;
+                        case "maybe":
+                            A9E[i] = 1;
+                            break;
+                        default:
+                            A9E[i] = 0
+                    }
+                }
+                return A9E
+            }
+            return [0, 0, 0]
+        },
+        jscaps: function() {
+            return [
+                    +("Intl" in window), 
+                    +("crypto" in window), 
+                    +("crypto" in window && !!window["crypto"] && "getRandomValues" in window["crypto"]), 
+                    +("performance" in window), 
+                    +("localStorage" in window), 
+                    +("sessionStorage" in window), 
+                    +("openDatabase" in window), 
+                    +("indexedDB" in window), 
+                    +!!document["createElement"]("div")["addBehavior"], 
+                    +("geolocation" in navigator), 
+                    +!!document["createElement"]("canvas")["getContext"], 
+                    +("Promise" in window), 
+                    +("WebSocket" in window && !!window["WebSocket"] && window["WebSocket"]["CLOSING"] === 2), 
+                    +("RTCPeerConnection" in window), 
+                    +("getUserMedia" in navigator), 
+                    +("Notification" in window && "permission" in window["Notification"] && "requestPermission" in window["Notification"]), 
+                    +("AudioContext" in window || "webkitAudioContext" in window), 
+                    +("Worker" in window), 
+                    +("WebAssembly" in window), 
+                    (+(("doNotTrack" in navigator) ? (navigator["doNotTrack"] == 1 ? 1 : 0) : 2)), 
+                    +(isNaN(navigator["javaEnabled"]()) ? 2 : navigator["javaEnabled"]())
+                ]
+        },
+        touchSupport: function() {
+            K6E = navigator["maxTouchPoints"] || navigator["msMaxTouchPoints"] || 0;
+            S6E = false;
+            try {
+                document["createEvent"]("TouchEvent");
+                S6E = true;
+            } catch (D8b) {}
+            return [K6E, +S6E, +("ontouchstart" in window)]
+        },
+        html5audio: function() {
+            q8b = [
+                "audio/mpeg;", 
+                "audio/ogg; codecs=\"vorbis\"", 
+                "audio/wav; codecs=\"1\""
+            ];
+            o8b = document["createElement"]("audio");
+            if (o8b["canPlayType"]) {
+                T8b = [];
+                for (var i = 0; i < q8b["length"]; i++) {
+                    switch (o8b["canPlayType"](q8b[i])) {
+                        case "probably":
+                            T8b[i] = 2;
+                            break;
+                        case "maybe":
+                            T8b[i] = 1;
+                            break;
+                        default:
+                            T8b[i] = 0
+                    }
+                }
+                return T8b
+            }
+            return [0, 0, 0]
+        },
+        timezone: function() {
+            s8b = [];
+            for (var M8b = "2007" - 0; M8b < ("2017" | 0); M8b++) {
+                e8b = new Date(M8b, 6, 22); 
+                a2b = new Date(M8b, 12, 22);
+                s8b["push"](-Math["ceil"](e8b["getTimezoneOffset"]())); 
+                s8b["push"](-Math["ceil"](a2b["getTimezoneOffset"]()));
+            }
+            return s8b
+        },
+        concurrency: function() {
+            return navigator["hardwareConcurrency"] || 0
+        },
+        mediaDevicesCallback: function(H2b) {
+            // H2b('mediaDevicesCallback', "0")
+            function U2b(E2b) {
+                C2b = "";
+                try {
+                    for (var i = 0; i < E2b["length"]; i++) 
+                        C2b += E2b[i]["kind"] || "0"
+                } catch (Y2b) {}
+                return C2b
+            }
+            if (navigator["mediaDevices"] && navigator["mediaDevices"]["enumerateDevices"]) {
+                navigator["mediaDevices"]["enumerateDevices"]()["then"](function(b2b) {
+                        H2b('mediaDevicesCallback', U2b(b2b))
+                    }, function(s2b) {
+                        H2b('mediaDevicesCallback', "1")
+                    }
+                ) 
+            } else {
+                if (window["MediaStreamTrack"]) {
+                    if (typeof MediaStreamTrack["getSources"] !== "undefined") {
+                        MediaStreamTrack["getSources"](U2b)
+                    } else {
+                        H2b('mediaDevicesCallback', "2")
+                    }
+                } else {
+                     H2b('mediaDevicesCallback', "3")
+                }
+            }
+
+        },
+        detectHeadless: function() {
+            n2b = navigator["userAgent"];
+            return [
+                    +!!document["documentElement"]["getAttribute"]("webdriver"), 
+                    +("_Selenium_IDE_Recorder" in window), 
+                    +("__webdriver_script_fn" in document), 
+                    +("webdriver" in navigator),
+                    +(/phantomjs/i["test"](n2b)), 
+                    +("callPhantom" in window), 
+                    +("_phantom" in window), 
+                    +(/headlesschrome/i["test"](n2b)), 
+                    +(navigator["languages"] == "")
+                ]
+        }
+    }
+    all_props = {
+        // 'timestamp': S8M.timestamp(),
+        'mime': S8M.mime(),
+        'plugins': S8M.plugins(),
+        'objectsEnumerate': S8M.objectsEnumerate(),
+        'fonts': S8M.fonts(),
+        'screen': S8M.screen(),
+        'language': S8M.language(),
+        'gpu': S8M.gpu(),
+        'platform': S8M.platform(),
+        'canvas': S8M.canvas(),
+        'es6features': S8M.es6features(),
+        'html5video': S8M.html5video(),
+        'jscaps': S8M.jscaps(),
+        'touchSupport': S8M.touchSupport(),
+        'html5audio': S8M.html5audio(),
+        'timezone': S8M.timezone(),
+        'concurrency': S8M.concurrency(),
+        'detectHeadless': S8M.detectHeadless(),
+        'detectHeadlessCallback': '',
+        'mediaDevicesCallback': '',
+        'offlineAudioCallback': ''
+    }
+    translate ={
+        // 'timestamp': '',
+        'mime': 'форматы',
+        'plugins': 'плагины',
+        'objectsEnumerate': 'свойства navigator и screen',
+        'fonts': 'шрифты',
+        'screen': 'экран',
+        'language': 'язык',
+        'gpu': 'GPU',
+        'platform': 'операционка',
+        'canvas': 'отрисовка картинки видяхой',
+        'es6features': 'es6 свойства браузера',
+        'html5video': 'форматы video',
+        'jscaps': 'доступные свойства браузера',
+        'touchSupport': 'поддержка тача',
+        'html5audio': 'форматы audio',
+        'timezone': 'таймзона',
+        'concurrency': 'количество ядер',
+        'detectHeadless': 'тест на фековость браузера',
+        'detectHeadlessCallback': 'асинхронный тест на фековость браузера',
+        'mediaDevicesCallback': 'аудио устройства в системе',
+        'offlineAudioCallback': 'генерация сампла на звуковухе'
+    }
+    console.log(all_props)
+
+    function return_string(variable) {
+        if (Object.prototype.toString.call(variable) === '[object Array]') {
+            variable = variable.join("");
+        }
+        return variable
+    }
+
+    function add_table_row(name) {
+        var table_result = document.getElementById('results');
+        table_row_tpl = '<tr><td>{name}</td><td>{value}</td></tr>';
+        name_translated = translate[name];
+        value = all_props[name]
+        if (value.length > 100) value = btoa(value)
+        table_row = table_row_tpl.replace('{name}', name_translated).replace('{value}', value)
+        table_result.insertAdjacentHTML('beforeend', table_row);
+    }
+
+    function add_value(name, value) {
+        all_props[name] = value;
+        add_table_row(name);
+    }
+
+    add_table_row('mime')
+    add_table_row('plugins')
+    add_table_row('objectsEnumerate')
+    add_table_row('fonts')
+    add_table_row('screen')
+    add_table_row('language')
+    add_table_row('gpu')
+    add_table_row('platform')
+    add_table_row('canvas')
+    add_table_row('es6features')
+    add_table_row('html5video')
+    add_table_row('jscaps')
+    add_table_row('touchSupport')
+    add_table_row('html5audio')
+    add_table_row('timezone')
+    add_table_row('concurrency')
+    add_table_row('detectHeadless')
+    S8M.detectHeadlessCallback(add_value)
+    S8M.mediaDevicesCallback(add_value)
+    S8M.offlineAudioCallback(add_value)
+
+    </script>
+</body>
+</html>
